@@ -1,0 +1,21 @@
+
+%p
+Hello there!
+%p
+its #{@organization.title} organization
+%p
+You can invite other users to your organization
+
+.row
+  .col-md-6.col-md-offset-3
+    = form_tag('/org_members', :method => "post") do
+
+      = hidden_field_tag :organization_id, @organization.id
+      = label_tag :email, "Email of user"
+      = email_field_tag :email, '', placeholder: User.human_attribute_name(:email)
+      = label :role, "role"
+      = select_tag :role, options_for_select(OrgMember.role.options)
+      = submit_tag "invite user", class: "btn btn-primary"
+
+
+= link_to "Your Profile", org_member_path, class: 'btn btn-warning'

@@ -1,0 +1,10 @@
+%h1 List of Organizations
+= render  @organizations
+
+%table{:width=> "100%", :border => 1}
+  %body
+    %tr
+      %td Title
+    - @organizations.each do |object|
+      %tr
+        %td= link_to object.title, object

@@ -1,0 +1,16 @@
+
+%html
+%head
+%title TestPoll
+%body
+%h1 Welcome to Test Application!
+%p
+  - if current_user
+    = link_to "List of organizations", organizations_path, class: 'btn btn-warning'
+  - else
+    %h2 Please  sign up or log in to continue!
+
+
+
+
+

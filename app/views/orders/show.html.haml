@@ -1,0 +1,47 @@
+.row
+  %aside.col-md-4
+    %section.poll_info
+
+      %h1
+        = 'Order №' + @order.order_number.to_s
+
+      %h2
+        %u Orderer:
+        %h3
+          = @order.first_name
+          = @order.patronymic
+          = @order.last_name
+      %h3
+        %u Phone number:
+        = @order.phone_number
+
+      %h3
+        %u Email:
+        = @order.email
+      %h3
+        %u Cargo parameters:
+        %h4
+          Weight:
+          = @order.weight
+        %h4
+          Length:
+          = @order.length
+        %h4
+          Width:
+          = @order.width
+        %h4
+          Height:
+          = @order.height
+      %h3
+        %u Origin:
+        = @order.origin
+      %h3
+        %u Destination:
+        = @order.destination
+
+      %h3
+        %u Distance:
+        = @order.distance.to_s + ' km'
+      %h3
+        %u Price:
+        = @order.price.to_s + ' roubles'

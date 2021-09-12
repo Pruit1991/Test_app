@@ -1,0 +1,38 @@
+%h2 List of members:
+
+- if @admin
+  %h3 You are admin.
+  %h3 Operators:
+  = paginate @org_members.where(role: 'operator')
+  %table{:width=> "100%", :border => 2}
+    %body
+      %tr
+        %td Role
+        %td User
+        %td List of orders
+      - @org_members.where(organization_id: @organization.id, role: 'operator').each do |object|
+        %tr
+          %td= object.role
+          %td= object.user.email
+          - @orders.where(user: object).each do |object|
+            %td= link_to object.order_number, object
+- else
+  %h3 You are operator
+  %h3 Your orders:
+  = paginate @orders.where(id: current_user)
+  %table{:width=> "75%", :border => 2}
+    %body
+      %tr
+        %td Order number
+        %td Origin
+        %td Destination
+        %td Distance
+        %td Price
+      - @orders.where(user: current_user).each do |object|
+        %tr
+          %td= link_to object.order_number, object
+          %td= object.origin
+          %td= object.destination
+          %td= object.distance
+          %td= object.price
+

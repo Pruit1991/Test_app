@@ -1,0 +1,35 @@
+
+%h1 List of Orders
+
+%table{:width=> "100%", :border => 1}
+  %body
+    %tr
+      %td Order number
+      %td First name:
+      %td Patronymic:
+      %td Last name:
+      %td Phone number:
+      %td Email:
+      %td Origin
+      %td Destination
+      %td Distance
+      %td Price
+    - @orders.each do |object|
+      %tr
+        %td= link_to object.order_number, object
+        %td= object.first_name
+        %td= object.patronymic
+        %td= object.last_name
+        %td= object.phone_number
+        %td= object.email
+        %td= object.origin
+        %td= object.destination
+        %td= object.distance
+        %td= object.price
+%tr
+  Sorting by:
+  %th= sortable "created_at"
+  %th= sortable "price"
+  %th= sortable "distance"
+
+= paginate @orders

@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+  backend: &backend
+    image: app-dev:1.0.0
+    container_name: app-backend
+    build:
+      context: .dockerdev
+      dockerfile: Dockerfile
+      args:
+        RUBY_VERSION: '2.7.3'
+        PG_MAJOR: '12'
+        BUNDLER_VERSION: '2.2.1'
+    volumes:
+      - .:/app
+      - rails_cache:/app/tmp/cache
+      - bundle:/usr/local/bundle
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      RAILS_MAX_THREADS: 10
+      REDIS_URL: redis://redis:6379/1
+      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: 'true'
+      BOOTSNAP_CACHE_DIR: /usr/local/bundle/_bootsnap
+      WEB_CONCURRENCY: 1
+      HISTFILE: /app/log/.bash_history
+      PSQL_HISTFILE: /app/log/.psql_history
+      EDITOR: vi
+
+      DB_HOST: db
+      DB_BASE: app
+      DB_USER: postgres
+      DB_PASS: pwd
+    tmpfs:
+      - /tmp
+    depends_on:
+      - db
+      - redis
+    command: .dockerdev/entrypoints/backend.sh
+    ports:
+      - 3000:3000
+
+  db:
+    image: postgres:12-alpine
+    container_name: app-db
+    restart: on-failure
+    environment:
+      POSTGRES_PASSWORD: pwd
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./log:/root/log:cached
+    ports:
+      - 5432
+
+  sidekiq:
+    <<: *backend
+    container_name: app-sidekiq
+    command: .dockerdev/entrypoints/sidekiq.sh
+    ports:
+      - 3001:3000
+
+  redis:
+    image: redis:alpine
+    container_name: app-redis
+    restart: on-failure
+    volumes:
+      - redis:/data
+    ports:
+      - 6379
+
+volumes:
+  bundle:
+  postgres:
+  redis:
+  rails_cache:

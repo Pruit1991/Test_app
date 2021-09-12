@@ -1,0 +1,13 @@
+%h1
+  = current_user.email
+
+%p
+  = image_tag current_user.avatar.url(:thumb) if current_user.avatar?
+  Its a great avatar, isnt it?
+
+%p
+  = link_to "Create Organization", new_organization_path, class: 'btn btn-warning'
+  Wanna create a new organization?
+
+
+

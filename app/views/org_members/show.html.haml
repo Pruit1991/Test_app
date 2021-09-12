@@ -1,0 +1,15 @@
+%h1 It's your profile #{@org_member.user.email}
+%h3 You are admin.
+%h3 Operators:
+%table{:width=> "100%", :border => 2}
+  %body
+    %tr
+      %td User
+      %td List of orders
+    - @org_members.where(organization_id: @organization.id, role: 'operator').each do |object|
+      %tr
+        %td= object.user.email
+        - @orders.where(user: object).each do |object|
+          %td= link_to object.order_number, object
+= link_to "your personal orders", orders_path, class: 'btn btn-warning'
+

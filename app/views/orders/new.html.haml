@@ -1,0 +1,62 @@
+%h1 Greetings! How about create a new order?
+.row
+  .col-md-6.col-md-offset-3
+    = form_with model: @order, local: true do |f|
+
+      = f.hidden_field :user_id
+      = f.label :first_name
+      = f.text_field :first_name
+      - @order.errors.full_messages_for(:first_name).each do |message|
+        %div= message
+
+      = f.label :patronymic
+      = f.text_field :patronymic
+      - @order.errors.full_messages_for(:patronymic).each do |message|
+        %div= message
+
+      = f.label :last_name
+      = f.text_field :last_name
+      - @order.errors.full_messages_for(:last_name).each do |message|
+        %div= message
+
+      = f.label :phone_number
+      = f.text_field :phone_number
+      - @order.errors.full_messages_for(:phone_number).each do |message|
+        %div= message
+
+      = f.label :email
+      = f.email_field :email
+      - @order.errors.full_messages_for(:email).each do |message|
+        %div= message
+
+      = f.label :weight
+      = f.number_field :weight
+      - @order.errors.full_messages_for(:weight).each do |message|
+        %div= message
+
+      = f.label :length
+      = f.number_field :length
+      - @order.errors.full_messages_for(:length).each do |message|
+        %div= message
+
+      = f.label :width
+      = f.number_field :width
+      - @order.errors.full_messages_for(:width).each do |message|
+        %div= message
+
+      = f.label :height
+      = f.number_field :height
+      - @order.errors.full_messages_for(:height).each do |message|
+        %div= message
+
+      = f.label :origin
+      = f.text_field :origin
+      - @order.errors.full_messages_for(:origin).each do |message|
+        %div= message
+
+      = f.label :destination
+      = f.text_field :destination
+      - @order.errors.full_messages_for(:destination).each do |message|
+        %div= message
+
+      = f.submit "Create new order", class: "btn btn-primary"
