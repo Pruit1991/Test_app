@@ -37,7 +37,7 @@ ActiveAdmin.register Order do
       order = resource
       order.assign_attributes(permitted_params[:order])
 
-      UpdateOrderEmailWorker.perform_async(order.id) if order.aasm_state_changed? && order.valid?
+      UpdateOrderEmailWorker.perform_async(order.id) if order.aasm_state_changed? && order.save
       order.save
       flash[:success] = 'Order updated!'
       render :show

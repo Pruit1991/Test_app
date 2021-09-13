@@ -16,7 +16,7 @@ class OrgMembersController < ApplicationController
   end
 
   def show
-    @org_members = OrgMember.all
+    @org_members = OrgMember.all.page(params[:page])
     @organization = Organization.find(params[:id])
     @org_member = OrgMember.find_by!(user: current_user, organization: @organization)
     authorize @org_member, :show?
