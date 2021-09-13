@@ -1,5 +1,6 @@
 %h1 It's your profile #{@org_member.user.email}
 %h3 You are admin.
+= paginate @org_members.where(role: 'operator')
 %h3 Operators:
 %table{:width=> "100%", :border => 2}
   %body
@@ -12,4 +13,6 @@
         - @orders.where(user: object).each do |object|
           %td= link_to object.order_number, object
 = link_to "your personal orders", orders_path, class: 'btn btn-warning'
+
+
 

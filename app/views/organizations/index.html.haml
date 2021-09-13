@@ -8,3 +8,4 @@
     - @organizations.each do |object|
       %tr
         %td= link_to object.title, object
+= paginate @organizations
